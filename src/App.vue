@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import NavbarComponent from './components/NavbarComponent.vue'
-import MainLayout from './layout/MainLayout.vue'
+import HeaderComponent from './components/HeaderComponent.vue'
+// import Hero from './components/Hero.vue'
+import FooterComponent from './components/FooterComponent.vue'
 </script>
 
 <template>
-  <NavbarComponent />
-  <MainLayout>
-    <RouterView />
-  </MainLayout>
+  <HeaderComponent />
+  <main class="container">
+    <router-view />
+  </main>
+  <FooterComponent />
 </template>
-
-<style scoped></style>
