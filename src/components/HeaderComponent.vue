@@ -1,13 +1,16 @@
 <script setup lang="ts">
-const menu = [
-  'Prefectures',
-  'Rail Passes',
-]
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const returnToHomePage = () => {
+  router.push('/')
+}
+const menu = ['Prefectures', 'Rail Passes']
 </script>
 
 <template>
   <header class="header">
-    <h1>Japan Travel Itineraries</h1>
+    <h1 class="home" @click="returnToHomePage">Japan Travel Itineraries</h1>
     <nav>
       <a v-for="item in menu" :key="item">{{ item }}</a>
     </nav>
@@ -18,6 +21,10 @@ const menu = [
 .header {
   text-align: center;
   padding: 2.5rem 1rem;
+}
+
+.home {
+  cursor: pointer;
 }
 
 h1 {

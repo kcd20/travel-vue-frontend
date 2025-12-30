@@ -6,6 +6,6 @@
 
 <style scoped>
 .layout {
-  padding: 2rem;
+  padding: 0 5rem;
 }
 </style>

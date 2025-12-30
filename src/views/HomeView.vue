@@ -6,26 +6,19 @@ import PostsListComponent from '@/components/PostsListComponent.vue'
 
 <template>
   <div>
-    <PostCardComponent />
-    <SidebarComponent />
+    <div class="top">
+      <PostCardComponent />
+      <SidebarComponent />
+    </div>
 
     <PostsListComponent />
   </div>
 </template>
 
 <style>
-.container {
-  max-width: 1200px;
-  margin: 3rem auto;
+.top {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 3rem;
-}
-
-@media (max-width: 900px) {
-  .container {
-    grid-template-columns: 1fr;
-    margin: 2rem 1rem;
-  }
 }
 </style>

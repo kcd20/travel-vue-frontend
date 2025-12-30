@@ -41,7 +41,6 @@ const posts = [
 <style scoped>
 .posts-list {
   margin: 3rem auto;
-  max-width: 1200px;
 }
 
 .posts-list h3 {

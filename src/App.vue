@@ -2,12 +2,13 @@
 import HeaderComponent from './components/HeaderComponent.vue'
 // import Hero from './components/Hero.vue'
 import FooterComponent from './components/FooterComponent.vue'
+import MainLayout from './layout/MainLayout.vue';
 </script>
 
 <template>
   <HeaderComponent />
-  <main class="container">
+  <MainLayout>
     <router-view />
-  </main>
+  </MainLayout>
   <FooterComponent />
 </template>
