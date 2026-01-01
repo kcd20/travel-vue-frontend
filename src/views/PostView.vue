@@ -1,15 +1,8 @@
-<!-- <script setup lang="ts">
-import { posts } from '@/data/posts'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-const post = posts.find((p) => p.id === Number(route.params.id))
+<script setup lang="ts">
 </script>
 
 <template>
-  <div v-if="post">
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
+  <div>
     <router-link to="/">← Back</router-link>
   </div>
-</template> -->
+</template>
