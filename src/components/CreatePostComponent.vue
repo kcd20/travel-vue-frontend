@@ -18,12 +18,12 @@ function handleSubmit() {
   <form @submit.prevent="handleSubmit" class="form">
     <div class="title-container">
       <label for="title">Title:</label>
-      <input
-        class="title"
-        v-model="title"
-        type="text"
-        placeholder="Enter a title"
-      />
+      <input class="title" v-model="title" type="text" placeholder="Enter a title" />
+    </div>
+
+    <div class="title-container">
+      <label for="title">Title:</label>
+      <input type="file" accept="image/*" />
     </div>
 
     <div class="title-container">
@@ -31,9 +31,7 @@ function handleSubmit() {
       <TextEditorComponent v-model="content" />
     </div>
 
-    <button type="submit" class="submit">
-      Submit
-    </button>
+    <button type="submit" class="submit">Submit</button>
   </form>
 </template>
 

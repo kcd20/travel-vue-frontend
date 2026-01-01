@@ -20,7 +20,7 @@ const menu = ['Prefectures', 'Rail Passes']
 <style scoped>
 .header {
   text-align: center;
-  padding: 2.5rem 1rem;
+  padding: 2rem 1rem;
 }
 
 .home {

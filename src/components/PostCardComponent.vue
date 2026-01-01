@@ -1,16 +1,22 @@
+<script setup lang="ts">
+import type { PostResponseInterface } from '@/type/PostResponseInterface';
+
+defineProps<{
+  firstPost: PostResponseInterface
+}>()
+</script>
+
 <template>
   <article class="post">
-    <h2>My Favourite Travel Destinations</h2>
+    <h2>{{ firstPost.title }}</h2>
 
     <div class="meta">
-      <span>Posted on January 23, 2018</span>
-      <span>by Sam Smith</span>
+      <span>Posted on {{ firstPost.createdOn }}</span>
+      <!-- <span>by Sam Smith</span> -->
     </div>
 
     <p>
-      Etiam placerat velit vitae dui blandit sollicitudin. Vestibulum
-      tincidunt sed dolor sit amet volutpat. Nullam egestas sem at
-      mollis sodales.
+      {{ firstPost.description }}
     </p>
   </article>
 </template>

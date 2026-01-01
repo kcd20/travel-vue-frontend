@@ -1,42 +1,24 @@
+<script setup lang="ts">
+import type { PostResponseInterface } from '@/type/PostResponseInterface';
+
+defineProps<{
+  secondToFourthPosts: PostResponseInterface[]
+}>()
+</script>
+
 <template>
   <section class="posts-list">
     <h3>More Posts</h3>
     <div class="posts-grid">
-      <article v-for="post in posts" :key="post.id" class="post-card">
-        <img :src="post.image" :alt="post.title" />
+      <article v-for="post in secondToFourthPosts" :key="post._id" class="post-card">
+        <img :src="post.coverImage" :alt="post.title" />
         <h4>{{ post.title }}</h4>
-        <p class="date">{{ post.date }}</p>
-        <p class="excerpt">{{ post.excerpt }}</p>
+        <p class="date">{{ post.createdOn }}</p>
+        <p class="description">{{ post.description }}</p>
       </article>
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-const posts = [
-  {
-    id: 1,
-    title: 'Exploring the Mountains',
-    date: 'March 10, 2018',
-    excerpt: 'A thrilling adventure through the mountain trails.',
-    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=60'
-  },
-  {
-    id: 2,
-    title: 'City Lights at Night',
-    date: 'February 28, 2018',
-    excerpt: 'Discovering the charm of the city after dark.',
-    image: 'https://images.unsplash.com/photo-1468071174046-657d9d351a40?auto=format&fit=crop&w=400&q=60'
-  },
-  {
-    id: 3,
-    title: 'Beach Life and Sunshine',
-    date: 'January 15, 2018',
-    excerpt: 'Relaxing on the sandy shores with ocean views.',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=60'
-  }
-]
-</script>
 
 <style scoped>
 .posts-list {
@@ -87,7 +69,7 @@ const posts = [
   margin-bottom: 1rem;
 }
 
-.excerpt {
+.description {
   color: #444;
   font-size: 1rem;
   line-height: 1.5;

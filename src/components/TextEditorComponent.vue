@@ -12,7 +12,7 @@ const content = defineModel<string>()
 </template>
 
 <style scoped>
-:deep .ql-editor {
+:deep(.ql-editor) {
   min-height: 10rem;
 }
 </style>

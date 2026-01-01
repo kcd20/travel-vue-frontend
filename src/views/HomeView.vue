@@ -1,24 +1,12 @@
 <script setup lang="ts">
-import SidebarComponent from '@/components/SidebarComponent.vue'
-import PostCardComponent from '../components/PostCardComponent.vue'
-import PostsListComponent from '@/components/PostsListComponent.vue'
+import HomePageComponent from '@/components/HomePageComponent.vue';
 </script>
 
 <template>
   <div>
-    <div class="top">
-      <PostCardComponent />
-      <SidebarComponent />
-    </div>
-
-    <PostsListComponent />
+    <h1>Latest Post</h1>
+    <HomePageComponent />
   </div>
 </template>
 
-<style>
-.top {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 3rem;
-}
-</style>
+
