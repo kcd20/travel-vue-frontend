@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import PostCardComponent from './PostCardComponent.vue';
-import PostsListComponent from './PostsListComponent.vue';
+import PostsListComponent from './PostListComponent.vue';
 import SidebarComponent from './SidebarComponent.vue';
 import type { PostResponseInterface } from '@/type/PostResponseInterface';
 import axios from 'axios';
@@ -31,7 +31,7 @@ onMounted(async () => {
       <SidebarComponent />
     </div>
 
-    <PostsListComponent v-if="secondToFourthPosts" :secondToFourthPosts="secondToFourthPosts"/>
+    <PostsListComponent v-if="secondToFourthPosts" :postList="secondToFourthPosts"/>
   </div>
 </template>
 

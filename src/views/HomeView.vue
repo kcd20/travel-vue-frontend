@@ -4,9 +4,14 @@ import HomePageComponent from '@/components/HomePageComponent.vue';
 
 <template>
   <div>
-    <h1>Latest Post</h1>
+    <h1 class="home-title">Latest Post</h1>
     <HomePageComponent />
   </div>
 </template>
 
 
+<style>
+.home-title {
+  margin: 2rem 0
+}
+</style>

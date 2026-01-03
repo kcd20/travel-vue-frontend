@@ -2,15 +2,15 @@
 import type { PostResponseInterface } from '@/type/PostResponseInterface';
 
 defineProps<{
-  secondToFourthPosts: PostResponseInterface[]
+  postList: PostResponseInterface[]
 }>()
 </script>
 
 <template>
-  <section class="posts-list">
-    <h3>More Posts</h3>
+  <section>
+    <h1 class="title">More Posts</h1>
     <div class="posts-grid">
-      <article v-for="post in secondToFourthPosts" :key="post._id" class="post-card">
+      <article v-for="post in postList" :key="post._id" class="post-card">
         <img :src="post.coverImage" :alt="post.title" />
         <h4>{{ post.title }}</h4>
         <p class="date">{{ post.createdOn }}</p>
@@ -25,10 +25,8 @@ defineProps<{
   margin: 3rem auto;
 }
 
-.posts-list h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  margin-bottom: 2rem;
+.title {
+  margin: 2rem 0;
 }
 
 .posts-grid {
