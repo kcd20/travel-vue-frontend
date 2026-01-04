@@ -7,8 +7,6 @@ const returnToHomePage = () => {
 }
 const menu = [
   { displayText: 'View All Posts', route: '/posts', variant: 'link' },
-  { displayText: 'Prefectures', route: '', variant: 'link' },
-  { displayText: 'Rail Passes', route: '', variant: 'link' },
   { displayText: 'Create a New Post', route: '/new-post', variant: 'button' },
 ]
 </script>

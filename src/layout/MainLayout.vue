@@ -6,7 +6,7 @@
 
 <style scoped>
 .layout {
-  padding: 0 5rem;
+  padding: 0 7rem;
 }
 
 @media (max-width: 640px) {

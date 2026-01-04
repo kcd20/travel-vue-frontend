@@ -1,9 +1,21 @@
 <script setup lang="ts">
-import type { PostResponseInterface } from '@/type/PostResponseInterface';
+import { dateTimeDisplayFormat } from '@/config/constants'
+import type { PostResponseInterface } from '@/type/PostResponseInterface'
+import dayjs from 'dayjs'
+import truncate from 'truncate-html'
+import DOMPurify from 'dompurify'
 
 defineProps<{
   postList: PostResponseInterface[]
 }>()
+
+const formatDateTime = (dateTime: string) => {
+  return dayjs(dateTime).format(dateTimeDisplayFormat)
+}
+
+const formatPreviewHtml = (descriptionHtml: string) => {
+  return truncate(DOMPurify.sanitize(descriptionHtml), 20, { byWords: true })
+}
 </script>
 
 <template>
@@ -11,10 +23,11 @@ defineProps<{
     <h1 class="title">More Posts</h1>
     <div class="posts-grid">
       <article v-for="post in postList" :key="post._id" class="post-card">
-        <img :src="post.coverImage" :alt="post.title" />
+        <img :src="post.coverImage.url" :alt="post.title" />
         <h4>{{ post.title }}</h4>
-        <p class="date">{{ post.createdOn }}</p>
-        <p class="description">{{ post.description }}</p>
+        <p class="date">Posted on {{ formatDateTime(post.createdOn) }}</p>
+        <div class="description" v-html="formatPreviewHtml(post.description)"></div>
+        <button class="view-more">View More</button>
       </article>
     </div>
   </section>
@@ -41,6 +54,8 @@ defineProps<{
   border-radius: 4px;
   transition: box-shadow 0.3s ease;
   background: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-card:hover {
@@ -71,5 +86,22 @@ defineProps<{
   color: #444;
   font-size: 1rem;
   line-height: 1.5;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.view-more {
+  background-color: #273fa3;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: auto;
+  align-self: end;
 }
 </style>

@@ -1,23 +1,37 @@
 <script setup lang="ts">
-import type { PostResponseInterface } from '@/type/PostResponseInterface';
+import { dateTimeDisplayFormat } from '@/config/constants'
+import type { PostResponseInterface } from '@/type/PostResponseInterface'
+import dayjs from 'dayjs'
+import { computed } from 'vue';
+import truncate from 'truncate-html'
 
-defineProps<{
+const props = defineProps<{
   firstPost: PostResponseInterface
 }>()
+
+const createdOn = dayjs(props.firstPost.createdOn).format(dateTimeDisplayFormat)
+
+const previewHtml = computed(() =>
+  truncate(props.firstPost.description, 30, { byWords: true })
+)
 </script>
 
 <template>
   <article class="post">
+    <div class="image-wrapper">
+      <img class="cover-image" :src="firstPost.coverImage.url" />
+    </div>
     <h2>{{ firstPost.title }}</h2>
 
     <div class="meta">
-      <span>Posted on {{ firstPost.createdOn }}</span>
-      <!-- <span>by Sam Smith</span> -->
+      <span>Posted on {{ createdOn }}</span>
     </div>
 
-    <p>
-      {{ firstPost.description }}
-    </p>
+    <div v-html="previewHtml"></div>
+
+    <div class="button-wrapper">
+      <button class="view-more">View More</button>
+    </div>
   </article>
 </template>
 
@@ -27,8 +41,11 @@ defineProps<{
   padding: 2.5rem;
 }
 
+.post:hover {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+}
+
 h2 {
-  font-family: 'Playfair Display', serif;
   font-size: 2rem;
   margin-bottom: 1rem;
 }
@@ -44,5 +61,29 @@ h2 {
 p {
   line-height: 1.8;
   color: #444;
+}
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.cover-image {
+  max-width: 550px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.view-more {
+  background-color: #273fa3;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 </style>
