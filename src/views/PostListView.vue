@@ -10,7 +10,7 @@ const error = ref('')
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get<PostResponseInterface[]>(`${API_BASE}/post/getAllPosts`)
+    const { data } = await axios.get<PostResponseInterface[]>(`${API_BASE}/api/post/getAllPosts`)
     allPosts.value = data
   } catch {
     error.value = 'Failed to load posts'
@@ -21,6 +21,5 @@ onMounted(async () => {
 <template>
   <div>
     <PostListComponent :postList="allPosts"/>
-    <router-link to="/">← Back</router-link>
   </div>
 </template>

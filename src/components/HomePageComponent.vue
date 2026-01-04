@@ -16,7 +16,7 @@ const secondToFourthPosts = computed(() =>
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get<PostResponseInterface[]>(`${API_BASE}/post/getLatestPosts`)
+    const { data } = await axios.get<PostResponseInterface[]>(`${API_BASE}/api/post/getLatestPosts`)
     latestPosts.value = data
   } catch {
     error.value = 'Failed to load posts'

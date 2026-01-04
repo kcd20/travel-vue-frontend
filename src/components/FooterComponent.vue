@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="footer-text">
-      <p>© 2025 Japan Travel Itinerary.</p>
+      <p>© 2026 Japan Travel Itinerary.</p>
     </div>
   </footer>
 </template>
