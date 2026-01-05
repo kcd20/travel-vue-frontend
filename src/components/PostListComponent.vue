@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import { dateTimeDisplayFormat } from '@/config/constants'
 import type { PostResponseInterface } from '@/type/PostResponseInterface'
-import dayjs from 'dayjs'
 import truncate from 'truncate-html'
 import DOMPurify from 'dompurify'
+import formatDateTimeDisplay from '@/utils/formatDateTimeDisplay';
 
 defineProps<{
   postList: PostResponseInterface[]
 }>()
-
-const formatDateTime = (dateTime: string) => {
-  return dayjs(dateTime).format(dateTimeDisplayFormat)
-}
 
 const formatPreviewHtml = (descriptionHtml: string) => {
   return truncate(DOMPurify.sanitize(descriptionHtml), 20, { byWords: true })
@@ -25,9 +20,11 @@ const formatPreviewHtml = (descriptionHtml: string) => {
       <article v-for="post in postList" :key="post._id" class="post-card">
         <img :src="post.coverImage.url" :alt="post.title" />
         <h4>{{ post.title }}</h4>
-        <p class="date">Posted on {{ formatDateTime(post.createdOn) }}</p>
+        <p class="date">Posted on {{ formatDateTimeDisplay(post.createdOn) }}</p>
         <div class="description" v-html="formatPreviewHtml(post.description)"></div>
-        <button class="view-more">View More</button>
+        <router-link class="view-more" :to="{ name: 'post', params: { id: post._id } }"
+          >View More</router-link
+        >
       </article>
     </div>
   </section>
@@ -103,5 +100,6 @@ const formatPreviewHtml = (descriptionHtml: string) => {
   font-size: 0.9rem;
   margin-top: auto;
   align-self: end;
+  text-decoration: none;
 }
 </style>
