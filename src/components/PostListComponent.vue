@@ -2,7 +2,7 @@
 import type { PostResponseInterface } from '@/type/PostResponseInterface'
 import truncate from 'truncate-html'
 import DOMPurify from 'dompurify'
-import formatDateTimeDisplay from '@/utils/formatDateTimeDisplay';
+import formatDateTimeDisplay from '@/utils/formatDateTimeDisplay'
 
 defineProps<{
   postList: PostResponseInterface[]

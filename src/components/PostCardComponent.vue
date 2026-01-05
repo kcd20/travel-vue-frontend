@@ -2,7 +2,7 @@
 import { dateTimeDisplayFormat } from '@/config/constants'
 import type { PostResponseInterface } from '@/type/PostResponseInterface'
 import dayjs from 'dayjs'
-import { computed } from 'vue';
+import { computed } from 'vue'
 import truncate from 'truncate-html'
 
 const props = defineProps<{
@@ -11,9 +11,7 @@ const props = defineProps<{
 
 const createdOn = dayjs(props.firstPost.createdOn).format(dateTimeDisplayFormat)
 
-const previewHtml = computed(() =>
-  truncate(props.firstPost.description, 30, { byWords: true })
-)
+const previewHtml = computed(() => truncate(props.firstPost.description, 30, { byWords: true }))
 </script>
 
 <template>
@@ -30,7 +28,9 @@ const previewHtml = computed(() =>
     <div v-html="previewHtml"></div>
 
     <div class="button-wrapper">
-      <button class="view-more">View More</button>
+      <router-link class="view-more" :to="{ name: 'post', params: { id: firstPost._id } }"
+        >View More</router-link
+      >
     </div>
   </article>
 </template>
@@ -85,5 +85,6 @@ p {
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
+  text-decoration: none;
 }
 </style>
