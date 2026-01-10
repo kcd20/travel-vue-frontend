@@ -1,0 +1,17 @@
+p {
+  margin: 0;
+}
+
+.action-button {
+  background-color: #273fa3;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: auto;
+  align-self: end;
+  text-decoration: none;
+  text-align: center;
+}
