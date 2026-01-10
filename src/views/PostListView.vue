@@ -4,6 +4,7 @@ import PostListComponent from '@/components/PostListComponent.vue';
 import type { PostResponseInterface } from '@/type/PostResponseInterface';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import { VueSpinner } from 'vue3-spinners'
 
 const allPosts = ref<PostResponseInterface[]>([])
 const error = ref('')
@@ -20,6 +21,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <PostListComponent :postList="allPosts"/>
+    <PostListComponent v-if="allPosts.length > 0" :postList="allPosts"/>
+     <div class="spinner" v-else><VueSpinner size="75" color="#273fa3" /></div>
   </div>
 </template>
