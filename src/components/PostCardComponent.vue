@@ -4,6 +4,7 @@ import type { PostResponseInterface } from '@/type/PostResponseInterface'
 import dayjs from 'dayjs'
 import { computed } from 'vue'
 import truncate from 'truncate-html'
+import DOMPurify from 'dompurify'
 
 const props = defineProps<{
   firstPost: PostResponseInterface
@@ -11,7 +12,13 @@ const props = defineProps<{
 
 const createdOn = dayjs(props.firstPost.createdOn).format(dateTimeDisplayFormat)
 
-const previewHtml = computed(() => truncate(props.firstPost.description, 30, { byWords: true }))
+const previewHtml = computed(() => {
+  const sanitized = DOMPurify.sanitize(props.firstPost.description, {
+    FORBID_TAGS: ['img']
+  })
+
+  return truncate(sanitized, 30, { byWords: true })
+})
 </script>
 
 <template>
@@ -28,7 +35,7 @@ const previewHtml = computed(() => truncate(props.firstPost.description, 30, { b
     <div v-html="previewHtml"></div>
 
     <div class="button-wrapper">
-      <router-link class="view-more" :to="{ name: 'post', params: { id: firstPost._id } }"
+      <router-link class="action-button" :to="{ name: 'post', params: { id: firstPost._id } }"
         >View More</router-link
       >
     </div>
@@ -75,16 +82,5 @@ p {
 .button-wrapper {
   display: flex;
   justify-content: flex-end;
-}
-
-.view-more {
-  background-color: #273fa3;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  text-decoration: none;
 }
 </style>

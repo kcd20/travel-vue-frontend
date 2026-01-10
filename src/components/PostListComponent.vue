@@ -9,7 +9,11 @@ defineProps<{
 }>()
 
 const formatPreviewHtml = (descriptionHtml: string) => {
-  return truncate(DOMPurify.sanitize(descriptionHtml), 20, { byWords: true })
+  const sanitized = DOMPurify.sanitize(descriptionHtml, {
+    FORBID_TAGS: ['img'],
+  })
+
+  return truncate(sanitized, 30, { byWords: true })
 }
 </script>
 
@@ -22,7 +26,7 @@ const formatPreviewHtml = (descriptionHtml: string) => {
         <h4>{{ post.title }}</h4>
         <p class="date">Posted on {{ formatDateTimeDisplay(post.createdOn) }}</p>
         <div class="description" v-html="formatPreviewHtml(post.description)"></div>
-        <router-link class="view-more" :to="{ name: 'post', params: { id: post._id } }"
+        <router-link class="action-button" :to="{ name: 'post', params: { id: post._id } }"
           >View More</router-link
         >
       </article>
@@ -88,18 +92,5 @@ const formatPreviewHtml = (descriptionHtml: string) => {
 .button-wrapper {
   display: flex;
   justify-content: flex-end;
-}
-
-.view-more {
-  background-color: #273fa3;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: auto;
-  align-self: end;
-  text-decoration: none;
 }
 </style>

@@ -74,17 +74,4 @@ onMounted(async () => {
   font-size: 1rem;
   line-height: 1.5;
 }
-
-.view-more {
-  background-color: #273fa3;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: auto;
-  align-self: end;
-  text-decoration: none;
-}
 </style>
