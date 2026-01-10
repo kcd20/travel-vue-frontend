@@ -1,21 +1,47 @@
 <script setup lang="ts">
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, onBeforeUnmount, watch } from 'vue'
 import TextEditorComponent from './TextEditorComponent.vue'
 import axios from 'axios'
 import { API_BASE } from '@/api/endpoints'
 
+/* ======================
+   State
+====================== */
 const title = ref('')
-const content = ref('')
+const editorContent = ref('')
+const editorKey = ref(0)
 
 const coverImageFileName = ref('')
 const coverImageUrl = ref('')
 const coverImageId = ref('')
+
 const loading = ref(false)
 const progress = ref(0)
-const error = ref('')
+
+const titleError = ref('')
+const coverImageError = ref('')
+const editorError = ref('')
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
+/* ======================
+   Reactive Validation
+====================== */
+watch(title, (val) => {
+  titleError.value = val.trim() ? '' : 'Please enter a title.'
+})
+
+watch(editorContent, (val) => {
+  editorError.value = val.trim() ? '' : 'Please enter a description.'
+})
+
+watch(coverImageUrl, (val) => {
+  coverImageError.value = val ? '' : 'Please upload a cover image.'
+})
+
+/* ======================
+   File Handling
+====================== */
 const triggerFileInput = () => {
   fileInput.value?.click()
 }
@@ -27,7 +53,6 @@ const handleFileUpload = (event: Event) => {
   }
 }
 
-// Drag & drop support (optional)
 const handleDrop = (event: DragEvent) => {
   event.preventDefault()
 
@@ -41,7 +66,7 @@ const handleDrop = (event: DragEvent) => {
 const uploadFile = async (file: File) => {
   loading.value = true
   progress.value = 0
-  error.value = ''
+  coverImageError.value = ''
 
   try {
     const formData = new FormData()
@@ -64,23 +89,25 @@ const uploadFile = async (file: File) => {
         coverImageId.value = res.public_id
         coverImageFileName.value = file.name
       } else {
-        error.value = 'Upload failed'
+        coverImageError.value = 'Upload failed'
       }
     }
 
     xhr.onerror = () => {
       loading.value = false
-      error.value = 'Upload failed'
+      coverImageError.value = 'Upload failed'
     }
 
     xhr.send(formData)
   } catch {
     loading.value = false
-    error.value = 'Upload failed'
+    coverImageError.value = 'Upload failed'
   }
 }
 
-// Cleanup abandoned image
+/* ======================
+   Cleanup
+====================== */
 const cleanup = async () => {
   if (!coverImageId.value) return
   try {
@@ -94,12 +121,15 @@ const cleanup = async () => {
 
 onBeforeUnmount(cleanup)
 
-// Submit form
+/* ======================
+   Submit
+====================== */
 const handleSubmit = async () => {
-  if (!coverImageUrl.value) {
-    error.value = 'Please upload a cover image.'
-    return
-  }
+  titleError.value = title.value.trim() ? '' : 'Please enter a title.'
+  coverImageError.value = coverImageUrl.value ? '' : 'Please upload a cover image.'
+  editorError.value = editorContent.value.trim() ? '' : 'Please enter a description.'
+
+  if (titleError.value || coverImageError.value || editorError.value) return
 
   const payload = {
     title: title.value,
@@ -108,65 +138,81 @@ const handleSubmit = async () => {
       publicId: coverImageId.value,
       fileName: coverImageFileName.value,
     },
-    description: content.value,
+    description: editorContent.value,
   }
 
   await axios.post(`${API_BASE}/api/post/createPost`, payload)
 
   // Reset form
   title.value = ''
-  content.value = ''
   coverImageUrl.value = ''
   coverImageId.value = ''
   coverImageFileName.value = ''
   progress.value = 0
+  editorKey.value++
+  editorContent.value = ''
 }
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="form">
-    <div class="title-container">
-      <label for="title">Title:</label>
-      <input class="title" v-model="title" type="text" placeholder="Enter a title" />
-    </div>
-
-    <div class="title-container">
-      <label for="cover-image">Cover Image:</label>
-
-      <input
-        type="file"
-        accept="image/*"
-        @change="handleFileUpload"
-        ref="fileInput"
-        class="hidden"
-      />
-
-      <div class="dropzone" @click="triggerFileInput" @dragover.prevent @drop.prevent="handleDrop">
-        <p v-if="!coverImageUrl">Drag & drop an image or click to select</p>
-        <img v-if="coverImageUrl" :src="coverImageUrl" alt="Uploaded cover" class="preview" />
+  <div class="page-wrapper">
+    <form @submit.prevent="handleSubmit" class="form">
+      <div class="title-container">
+        <label for="title">Title:</label>
+        <input class="title" v-model="title" type="text" placeholder="Enter a title" />
+        <p class="error">{{ titleError }}</p>
       </div>
 
-      <div v-if="loading" class="progress">Uploading: {{ progress }}%</div>
-    </div>
+      <div class="title-container">
+        <label for="cover-image">Cover Image:</label>
 
-    <div class="title-container">
-      <label class="block font-medium mb-1">Description:</label>
-      <TextEditorComponent v-model="content" />
-    </div>
+        <input
+          type="file"
+          accept="image/*"
+          @change="handleFileUpload"
+          ref="fileInput"
+          class="hidden"
+        />
 
-    <button type="submit" class="submit" :disabled="loading">
-      {{ loading ? 'Uploading...' : 'Submit' }}
-    </button>
+        <div
+          class="dropzone"
+          @click="triggerFileInput"
+          @dragover.prevent
+          @drop.prevent="handleDrop"
+        >
+          <p v-if="!coverImageUrl">Drag & drop an image or click to select</p>
+          <img v-if="coverImageUrl" :src="coverImageUrl" alt="Uploaded cover" class="preview" />
+        </div>
 
-    <p v-if="error" class="error">{{ error }}</p>
-  </form>
+        <div v-if="loading" class="progress">Uploading...</div>
+        <p class="error">{{ coverImageError }}</p>
+      </div>
+
+      <div class="title-container">
+        <label class="block font-medium mb-1">Description:</label>
+        <TextEditorComponent v-model="editorContent" :key="editorKey" />
+        <p class="error">{{ editorError }}</p>
+      </div>
+
+      <button type="submit" class="action-button" :disabled="loading">
+        {{ loading ? 'Uploading...' : 'Submit' }}
+      </button>
+    </form>
+  </div>
 </template>
 
 <style scoped>
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 50%;
 }
 .title-container {
   display: flex;
@@ -175,14 +221,11 @@ const handleSubmit = async () => {
 }
 .title {
   height: 1.5rem;
-  width: 50%;
 }
-.submit {
-  width: min-content;
-}
+
 .error {
   color: red;
-  font-size: 0.9rem;
+  height: 18px;
 }
 .preview {
   margin-top: 1rem;
