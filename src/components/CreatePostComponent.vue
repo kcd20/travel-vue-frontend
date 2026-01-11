@@ -22,20 +22,25 @@ const titleError = ref('')
 const coverImageError = ref('')
 const editorError = ref('')
 
+const submitted = ref(false)
+
 const fileInput = ref<HTMLInputElement | null>(null)
 
 /* ======================
    Reactive Validation
 ====================== */
 watch(title, (val) => {
+  if (!submitted.value) return
   titleError.value = val.trim() ? '' : 'Please enter a title.'
 })
 
 watch(editorContent, (val) => {
+  if (!submitted.value) return
   editorError.value = val.trim() ? '' : 'Please enter a description.'
 })
 
 watch(coverImageUrl, (val) => {
+  if (!submitted.value) return
   coverImageError.value = val ? '' : 'Please upload a cover image.'
 })
 
@@ -125,6 +130,7 @@ onBeforeUnmount(cleanup)
    Submit
 ====================== */
 const handleSubmit = async () => {
+  submitted.value = true
   titleError.value = title.value.trim() ? '' : 'Please enter a title.'
   coverImageError.value = coverImageUrl.value ? '' : 'Please upload a cover image.'
   editorError.value = editorContent.value.trim() ? '' : 'Please enter a description.'
@@ -144,6 +150,7 @@ const handleSubmit = async () => {
   await axios.post(`${API_BASE}/api/post/createPost`, payload)
 
   // Reset form
+  submitted.value = false
   title.value = ''
   coverImageUrl.value = ''
   coverImageId.value = ''
@@ -228,8 +235,7 @@ const handleSubmit = async () => {
   height: 18px;
 }
 .preview {
-  margin-top: 1rem;
-  max-width: 300px;
+  max-width: 400px;
   border-radius: 4px;
 }
 .dropzone {
