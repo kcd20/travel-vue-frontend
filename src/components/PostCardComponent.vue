@@ -45,7 +45,7 @@ const previewHtml = computed(() => {
 <style scoped>
 .post {
   border: 1px solid #ddd;
-  padding: 2.5rem;
+  padding: 1rem;
 }
 
 .post:hover {
@@ -80,11 +80,5 @@ h2 {
 .button-wrapper {
   display: flex;
   justify-content: flex-end;
-}
-
-@media (max-width: 640px) {
-.post {
-  padding: 1rem;
-}
 }
 </style>
