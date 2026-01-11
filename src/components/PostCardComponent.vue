@@ -14,7 +14,7 @@ const createdOn = dayjs(props.firstPost.createdOn).format(dateTimeDisplayFormat)
 
 const previewHtml = computed(() => {
   const sanitized = DOMPurify.sanitize(props.firstPost.description, {
-    FORBID_TAGS: ['img']
+    FORBID_TAGS: ['img'],
   })
 
   return truncate(sanitized, 30, { byWords: true })
@@ -65,22 +65,26 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
-p {
-  line-height: 1.8;
-  color: #444;
-}
-
 .image-wrapper {
   display: flex;
   justify-content: center;
 }
 
 .cover-image {
+  width: 100%;
   max-width: 550px;
+  height: auto;
+  border-radius: 6px;
 }
 
 .button-wrapper {
   display: flex;
   justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+.post {
+  padding: 1rem;
+}
 }
 </style>

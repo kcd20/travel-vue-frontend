@@ -5,7 +5,7 @@ import formatDateTimeDisplay from '@/utils/formatDateTimeDisplay'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify'
 
 const route = useRoute()
 const postId = route.params.id as string
@@ -59,7 +59,6 @@ onMounted(async () => {
 .post-card img {
   width: 100%;
   object-fit: cover;
-  margin-bottom: 1rem;
   border-radius: 4px;
 }
 
@@ -69,9 +68,22 @@ onMounted(async () => {
   margin-bottom: 1rem;
 }
 
-.description {
-  color: #444;
-  font-size: 1rem;
-  line-height: 1.5;
+.description :deep(img) {
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1440px) {
+  .post-card {
+    width: 70%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .post-card {
+    width: 100%;
+  }
 }
 </style>

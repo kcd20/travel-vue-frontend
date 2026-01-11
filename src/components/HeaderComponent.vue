@@ -44,6 +44,9 @@ const menu = [
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .router {
@@ -72,5 +75,31 @@ const menu = [
 .router--button:hover {
   background-color: #1f3184;
   transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .home {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 0;
+  }
+
+  .router {
+    display: block;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .router--button {
+    width: 50%;
+    text-align: center;
+  }
 }
 </style>

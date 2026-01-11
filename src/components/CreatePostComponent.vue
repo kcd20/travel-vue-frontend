@@ -251,5 +251,8 @@ const handleSubmit = async () => {
   .title {
     width: 100%;
   }
+  .form {
+    width: 100%;
+  }
 }
 </style>

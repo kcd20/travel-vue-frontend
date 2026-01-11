@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import CreatePostComponent from '@/components/CreatePostComponent.vue';
+import CreatePostComponent from '@/components/CreatePostComponent.vue'
 </script>
 
 <template>
-  <div>
-    <CreatePostComponent />
-  </div>
+  <CreatePostComponent />
 </template>
