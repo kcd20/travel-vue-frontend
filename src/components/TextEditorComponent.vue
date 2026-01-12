@@ -66,6 +66,5 @@ function onReady(quill: Quill) {
 
 .loading-indicator {
   margin-top: 0.5rem;
-  font-style: italic;
 }
 </style>

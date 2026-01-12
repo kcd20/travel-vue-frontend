@@ -9,7 +9,7 @@
   padding: 0 7rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 800px) {
   .layout {
     padding: 0 1.5rem;
   }

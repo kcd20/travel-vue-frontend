@@ -246,19 +246,23 @@ const handleSubmit = async () => {
   border-radius: 6px;
 }
 .progress {
-  font-size: 0.9rem;
-  color: #555;
   margin-top: 0.5rem;
 }
 .hidden {
   display: none;
 }
-@media (max-width: 640px) {
+@media (max-width: 1200px) {
   .title {
     width: 100%;
   }
   .form {
     width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .preview {
+    max-width: 100%;
   }
 }
 </style>
